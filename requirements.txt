@@ -1,0 +1,8 @@
+pandas
+jupyter
+user-agents
+requests
+netaddr
+pendulum
+scikit_learn
+scipy
