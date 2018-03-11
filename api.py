@@ -14,12 +14,12 @@ _classes = [
 
 app = Flask(__name__)
 
-with open('data/classifier.pkl', 'rb') as classifier_file:
+with open('/srv/data/classifier.pkl', 'rb') as classifier_file:
     lr = pickle.load(classifier_file)
 
 @app.route("/")
 def predict():
-    with open('data/format.pkl', 'rb') as format_file:
+    with open('/srv/data/format.pkl', 'rb') as format_file:
         x = pickle.load(format_file)
 
     for param in request.args:
