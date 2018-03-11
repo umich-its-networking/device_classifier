@@ -6,3 +6,4 @@ pendulum
 scikit_learn
 scipy
 flask
+gunicorn
