@@ -67,7 +67,7 @@ if __name__ == '__main__':
         level=log_level,
     )
 
-    logger.info('Reading raw data file "%s"' % args.data_file)
+    logger.info('Parsing raw data file "%s"' % args.data_file)
 
     X, y = get_data_and_target(
         pd.read_csv(args.data_file).drop_duplicates()
