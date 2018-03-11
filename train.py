@@ -21,7 +21,7 @@ def _get_device_class(ua_string):
     ua = user_agents.parse(ua_string)
     return _device_classes.get(
          (int(ua.is_mobile), int(ua.is_tablet), int(ua.is_pc)),
-         -1
+         3
     )
 
 
