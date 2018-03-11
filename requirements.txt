@@ -1,5 +1,4 @@
 pandas
-jupyter
 user-agents
 requests
 netaddr
