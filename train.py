@@ -76,7 +76,7 @@ if __name__ == '__main__':
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=0.1, random_state=1, stratify=y)
 
-    logger.info('Training classifier')
+    logger.info('Training classifier. Sample size: %d' % len(X_train))
     lr = get_fitted_classifier(X_train, y_train)
     logger.info('Classifier accuracy: %.1f%%' % (lr.score(X_test, y_test) * 100))
 
