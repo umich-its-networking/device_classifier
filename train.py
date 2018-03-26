@@ -78,7 +78,8 @@ if __name__ == '__main__':
 
     logger.info('Training classifier. Sample size: %d' % len(X_train))
     lr = get_fitted_classifier(X_train, y_train)
-    logger.info('Classifier accuracy: %.1f%%' % (lr.score(X_test, y_test) * 100))
+    logger.info('Classifier accuracy: %.1f%%' % (
+        lr.score(X_test, y_test) * 100))
 
     logger.info('Saving classifer to "%s"' % args.classifier_file.name)
     pickle.dump(lr, args.classifier_file)
