@@ -10,11 +10,11 @@ import user_agents
 
 logger = logging.getLogger(__name__)
 
+
 def fake_data(n=1000):
     fake = Faker()
     df = pd.DataFrame(
         columns=('mac_int', 'mac_str', 'user_agent', 'req_list', 'vendor'))
-
 
     random_state = np.random.RandomState()
     for i in range(n):
@@ -27,9 +27,8 @@ def fake_data(n=1000):
         except Exception:
             brand = 'None'
 
-
-        # Create a fake MAC address, using the first 3 characters from the device brand
-        # to have a consistent OUI
+        # Create a fake MAC address, using the first 3 characters from the
+        # device brand to have a consistent OUI
         mac_str = ':'.join('%02x' % x for x in (
             ord(brand[0]),
             ord(brand[1]),
@@ -39,8 +38,8 @@ def fake_data(n=1000):
             np.random.randint(0, 255),
         ))
 
-        # Create a random comma-separated list of integers, seeded with the first letter
-        # of the OS to have consistentcy
+        # Create a random comma-separated list of integers, seeded with the
+        # first letter of the OS to have consistentcy
         random_state.seed(ord(ua.os.family[0]))
         dhcp_opts = ','.join('%s' % x for x in random_state.randint(
             1, 25, len(ua.os.family), int))
