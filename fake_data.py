@@ -33,9 +33,9 @@ def fake_data(n=1000):
             ord(brand[0]),
             ord(brand[1]),
             ord(brand[2]),
-            np.random.randint(0, 255),
-            np.random.randint(0, 255),
-            np.random.randint(0, 255),
+            np.random.randint(0, 256),
+            np.random.randint(0, 256),
+            np.random.randint(0, 256),
         ))
 
         # Create a random comma-separated list of integers, seeded with the
