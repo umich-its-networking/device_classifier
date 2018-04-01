@@ -46,6 +46,27 @@ def get_fitted_classifier(X, y):
     return lr
 
 
+def train(raw_file):
+    X, y = get_data_and_target(
+        pd.read_csv(raw_file).drop_duplicates()
+    )
+
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.1, random_state=1, stratify=y)
+
+    lr = get_fitted_classifier(X_train, y_train)
+
+    class Meta(object):
+        def __init__(self):
+            self.format = X.head(1).copy()
+            self.format[:] = 0
+
+            self.sample_size = len(X_train)
+            self.accuracy = lr.score(X_test, y_test)
+
+    return (lr, Meta())
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-c', '--classifier_file',
@@ -74,22 +95,13 @@ if __name__ == '__main__':
 
     logger.info('Parsing raw data file "%s"' % args.data_file)
 
-    X, y = get_data_and_target(
-        pd.read_csv(args.data_file).drop_duplicates()
-    )
+    classifier, meta = train(args.data_file)
 
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.1, random_state=1, stratify=y)
-
-    logger.info('Training classifier. Sample size: %d' % len(X_train))
-    lr = get_fitted_classifier(X_train, y_train)
-    logger.info('Classifier accuracy: %.1f%%' % (
-        lr.score(X_test, y_test) * 100))
+    logger.info('Training sample size: %d' % meta.sample_size)
+    logger.info('Classifier accuracy: %.1f%%' % (meta.accuracy * 100))
 
     logger.info('Saving classifer to "%s"' % args.classifier_file.name)
-    pickle.dump(lr, args.classifier_file)
+    pickle.dump(classifier, args.classifier_file)
 
-    x = X.head(1).copy()
-    x.loc[:] = 0
     logger.info('Saving format to "%s"' % args.format_file.name)
-    pickle.dump(x, args.format_file)
+    pickle.dump(meta.format, args.format_file)
