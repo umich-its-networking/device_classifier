@@ -1,5 +1,4 @@
 import copy
-import logging
 import os
 
 from flask import Flask, request, jsonify
@@ -7,11 +6,14 @@ from flask import Flask, request, jsonify
 from train import train
 
 
-logger = logging.getLogger(__name__)
-
 app = Flask(__name__)
 
+app.logger.info('Parsing raw data file "%s"' % os.getenv('RAW_DATA'))
+
 classifier, meta = train(os.getenv('RAW_DATA'))
+
+app.logger.info('Training sample size: %d' % meta.sample_size)
+app.logger.info('Classifier accuracy: %.1f%%' % (meta.accuracy * 100))
 
 
 @app.route("/")
@@ -23,7 +25,7 @@ def predict():
         try:
             x.loc[0, [category]] = 1
         except KeyError:
-            logger.warn('Unknown category "%s"' % category)
+            app.logger.warn('Unknown category "%s"' % category)
 
     a = classifier.predict_proba(x)[0]
     probability = list(map(lambda x: round(float(x), 5), a))
