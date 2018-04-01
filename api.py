@@ -38,3 +38,11 @@ def predict():
             'predicted_class': _classes[classifier.predict(x)[0]],
             'probabilities': dict(zip(_classes, probability)),
         })
+
+
+@app.route("/info")
+def info():
+    return jsonify({
+            'sample_size': meta.sample_size,
+            'accuracy': meta.accuracy,
+        })
