@@ -9,13 +9,6 @@ from train import train
 
 logger = logging.getLogger(__name__)
 
-_classes = [
-    'mobile',
-    'tablet',
-    'pc',
-    'other',
-]
-
 app = Flask(__name__)
 
 classifier, meta = train(os.getenv('RAW_DATA'))
@@ -35,8 +28,8 @@ def predict():
     a = classifier.predict_proba(x)[0]
     probability = list(map(lambda x: round(float(x), 5), a))
     return jsonify({
-            'predicted_class': _classes[classifier.predict(x)[0]],
-            'probabilities': dict(zip(_classes, probability)),
+            'predicted_class': meta.classes[classifier.predict(x)[0]],
+            'probabilities': dict(zip(meta.classes, probability)),
         })
 
 

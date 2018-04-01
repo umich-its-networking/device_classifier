@@ -16,6 +16,12 @@ _device_classes = {
     (0, 0, 1): 2,
 }
 
+_device_class_names = [
+    'mobile',
+    'tablet',
+    'pc',
+    'other',
+]
 
 def _get_device_class(ua_string):
     ua = user_agents.parse(ua_string)
@@ -63,6 +69,7 @@ def train(raw_file):
 
             self.sample_size = len(X_train)
             self.accuracy = lr.score(X_test, y_test)
+            self.classes = _device_class_names
 
     return (lr, Meta())
 
