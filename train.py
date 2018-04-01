@@ -26,8 +26,13 @@ def _get_device_class(ua_string):
 
 
 def get_data_and_target(orig):
+    # pull OUI from MAC address
+    orig['oui'] = orig.mac_str.apply(lambda x: x[:8])
+
+    cols = ['req_list', 'vendor', 'oui']
+
     return (
-        pd.get_dummies(orig.loc[:, ['req_list', 'vendor']], prefix_sep=':'),
+        pd.get_dummies(orig.loc[:, cols], prefix_sep=':'),
         orig.user_agent.map(_get_device_class).values,
     )
 
