@@ -1,7 +1,11 @@
+import copy
 import logging
-import pickle
+import os
 
 from flask import Flask, request, jsonify
+
+from train import train
+
 
 logger = logging.getLogger(__name__)
 
@@ -14,26 +18,23 @@ _classes = [
 
 app = Flask(__name__)
 
-with open('/srv/data/classifier.pkl', 'rb') as classifier_file:
-    lr = pickle.load(classifier_file)
+classifier, meta = train(os.getenv('RAW_DATA'))
+
 
 @app.route("/")
 def predict():
-    with open('/srv/data/format.pkl', 'rb') as format_file:
-        x = pickle.load(format_file)
+    x = copy.deepcopy(meta.format)
 
     for param in request.args:
         category = '%s:%s' % (param, request.args.get(param))
         try:
-            x.loc[0,[category]] = 1
+            x.loc[0, [category]] = 1
         except KeyError:
             logger.warn('Unknown category "%s"' % category)
 
-    a = lr.predict_proba(x)[0]
+    a = classifier.predict_proba(x)[0]
     probability = list(map(lambda x: float(x), a))
     return jsonify({
-            'predicted_class': _classes[lr.predict(x)[0]],
+            'predicted_class': _classes[classifier.predict(x)[0]],
             'probabilities': dict(zip(_classes, probability)),
         })
-
-
