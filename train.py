@@ -23,6 +23,7 @@ _device_class_names = [
     'other',
 ]
 
+
 def _get_device_class(ua_string):
     ua = user_agents.parse(ua_string)
     return _device_classes.get(
