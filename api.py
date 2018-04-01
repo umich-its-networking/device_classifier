@@ -33,7 +33,7 @@ def predict():
             logger.warn('Unknown category "%s"' % category)
 
     a = classifier.predict_proba(x)[0]
-    probability = list(map(lambda x: float(x), a))
+    probability = list(map(lambda x: round(float(x), 5), a))
     return jsonify({
             'predicted_class': _classes[classifier.predict(x)[0]],
             'probabilities': dict(zip(_classes, probability)),
