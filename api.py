@@ -33,7 +33,7 @@ def predict():
         })
 
 
-@app.route("/info")
+@app.route("/info/")
 def info():
     return jsonify({
             'sample_size': meta.sample_size,
