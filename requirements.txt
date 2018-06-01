@@ -2,7 +2,7 @@ pandas
 user-agents
 requests
 netaddr
-pendulum
+pendulum==1.4.0
 scikit_learn
 scipy
 flask
