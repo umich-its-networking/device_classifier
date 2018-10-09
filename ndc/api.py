@@ -3,7 +3,7 @@ import os
 
 from flask import Flask, request, jsonify
 
-from train import train
+from ndc.train import train
 
 
 app = Flask(__name__)
