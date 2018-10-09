@@ -1,8 +1,8 @@
-# Network Device Classifier #
+# Network Device Classifier
 
 This is a proof-of-concept project created by the University of Michigan's ITS Infrastructure Networking team.
 
-## Setup ##
+### Setup
 
 1. Clone this repository
 2. Change to the cloned directory: `cd device_classifier`
