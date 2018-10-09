@@ -13,5 +13,6 @@ setup(
         'pendulum==1.4.0',
         'scikit-learn==0.20.0',
         'Flask==1.0.2',
+        'Faker==0.9.1',
     ],
 )
