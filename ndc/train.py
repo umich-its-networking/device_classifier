@@ -24,7 +24,7 @@ _device_class_names = [
 ]
 
 
-def _get_device_class(ua_string):
+def get_device_class(ua_string):
     ua = user_agents.parse(ua_string)
     return _device_classes.get(
          (int(ua.is_mobile), int(ua.is_tablet), int(ua.is_pc)),
@@ -40,7 +40,7 @@ def get_data_and_target(orig):
 
     return (
         pd.get_dummies(orig.loc[:, cols], prefix_sep=':'),
-        orig.user_agent.map(_get_device_class).values,
+        orig.user_agent.map(get_device_class).values,
     )
 
 
