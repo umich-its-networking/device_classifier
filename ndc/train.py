@@ -46,9 +46,7 @@ def get_data_and_target(orig):
 
 def get_fitted_classifier(X, y):
     lr = LogisticRegression(C=100.0, random_state=1)
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.3, random_state=1, stratify=y)
-    lr.fit(X_train, y_train)
+    lr.fit(X, y)
 
     return lr
 
