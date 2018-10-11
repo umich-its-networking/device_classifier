@@ -68,7 +68,8 @@ def train(raw_file):
 
             self.sample_size = len(X_train)
             self.accuracy = lr.score(X_test, y_test)
-            self.classes = _device_class_names
+            self.classes_all = _device_class_names
+            self.classes = [_device_class_names[x] for x in lr.classes_]
 
     return (lr, Meta())
 

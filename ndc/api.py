@@ -30,7 +30,7 @@ def predict():
     a = classifier.predict_proba(x)[0]
     probability = list(map(lambda x: round(float(x), 5), a))
     return jsonify({
-            'predicted_class': meta.classes[classifier.predict(x)[0]],
+            'predicted_class': meta.classes_all[classifier.predict(x)[0]],
             'probabilities': dict(zip(meta.classes, probability)),
         })
 
