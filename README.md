@@ -20,6 +20,8 @@ This is a proof-of-concept project created by the University of Michigan's ITS I
 
 Once the development server is running, you can try these URLs to see different predictions...
 
+## Examples
+
 **Display info about the trained classifier: <http://127.0.0.1:5000/info>**
 ```
 {
