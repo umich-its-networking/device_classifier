@@ -8,12 +8,7 @@ from ndc.train import train
 
 app = Flask(__name__)
 
-app.logger.info('Parsing raw data file "%s"' % os.getenv('RAW_DATA'))
-
 classifier, meta = train(os.getenv('RAW_DATA'))
-
-app.logger.info('Training sample size: %d' % meta.sample_size)
-app.logger.info('Classifier accuracy: %.1f%%' % (meta.accuracy * 100))
 
 
 @app.route("/")
