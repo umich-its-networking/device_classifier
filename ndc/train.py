@@ -45,7 +45,8 @@ def get_data_and_target(orig):
 
 
 def get_fitted_classifier(X, y):
-    lr = LogisticRegression(C=100.0, random_state=1)
+    lr = LogisticRegression(C=100.0, random_state=1,
+                            solver='liblinear', multi_class='ovr')
     lr.fit(X, y)
 
     return lr
