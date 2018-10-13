@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 import user_agents
 
-from ndc.train import get_device_class
+from ndc.utils import get_device_class
 
 logger = logging.getLogger(__name__)
 
@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 def fake_data(n=1000):
     fake = Faker()
     df = pd.DataFrame(
-        columns=('mac_int', 'mac_str', 'user_agent', 'req_list', 'vendor'))
+        columns=('device_class', 'mac_str', 'req_list', 'vendor'))
 
     random_state = np.random.RandomState()
 
@@ -34,12 +34,12 @@ def fake_data(n=1000):
         except Exception:
             brand = 'None'
 
-        # Create a fake MAC address, using the first 2 characters from the
+        # Create a fake MAC address, using the first 3 characters from the
         # device brand to have a consistent OUI
         mac_str = ':'.join('%02x' % x for x in (
             ord(brand[0]),
             ord(brand[1]),
-            int(device_class),
+            ord(brand[2]),
             np.random.randint(0, 256),
             np.random.randint(0, 256),
             np.random.randint(0, 256),
@@ -52,9 +52,9 @@ def fake_data(n=1000):
             1, 25, len(ua.os.family) + device_class, int))
 
         df = df.append({
-            'mac_int': i,
+            'device_class': device_class,
             'mac_str': mac_str,
-            'user_agent': ua_str,
+            'req_list': dhcp_opts,
             'req_list': dhcp_opts,
             'vendor': brand.lower(),
         }, ignore_index=True)

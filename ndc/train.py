@@ -3,33 +3,13 @@ import logging
 import pickle
 
 import pandas as pd
-import user_agents
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 
+from ndc.utils import DEVICE_CLASS_NAMES
+
+
 logger = logging.getLogger(__name__)
-
-
-_device_classes = {
-    (1, 0, 0): 0,
-    (0, 1, 0): 1,
-    (0, 0, 1): 2,
-}
-
-_device_class_names = [
-    'mobile',
-    'tablet',
-    'pc',
-    'other',
-]
-
-
-def get_device_class(ua_string):
-    ua = user_agents.parse(ua_string)
-    return _device_classes.get(
-         (int(ua.is_mobile), int(ua.is_tablet), int(ua.is_pc)),
-         3
-    )
 
 
 def get_data_and_target(orig):
@@ -40,7 +20,8 @@ def get_data_and_target(orig):
 
     return (
         pd.get_dummies(orig.loc[:, cols], prefix_sep=':'),
-        orig.user_agent.map(get_device_class).values,
+        orig.device_class
+        # orig.user_agent.map(get_device_class).values,
     )
 
 
@@ -69,8 +50,8 @@ def train(raw_file):
 
             self.sample_size = len(X_train)
             self.accuracy = lr.score(X_test, y_test)
-            self.classes_all = _device_class_names
-            self.classes = [_device_class_names[x] for x in lr.classes_]
+            self.classes_all = DEVICE_CLASS_NAMES
+            self.classes = [DEVICE_CLASS_NAMES[x] for x in lr.classes_]
 
     return (lr, Meta())
 
