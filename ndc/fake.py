@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 def fake_data(n=1000):
     fake = Faker()
     df = pd.DataFrame(
-        columns=('device_class', 'mac_str', 'req_list', 'vendor'))
+        columns=('device_class', 'oui', 'dhcp_options', 'dhcp_vendor'))
 
     random_state = np.random.RandomState()
 
@@ -32,27 +32,23 @@ def fake_data(n=1000):
 
         # Create a fake MAC address, using the first 3 characters from the
         # device brand to have a consistent OUI
-        mac_str = ':'.join('%02x' % x for x in (
+        oui = ':'.join('%02x' % x for x in (
             ord(brand[0]),
             ord(brand[1]),
             ord(brand[2]),
-            np.random.randint(0, 256),
-            np.random.randint(0, 256),
-            np.random.randint(0, 256),
         ))
 
         # Create a random comma-separated list of integers, seeded with the
         # length of the brand
         random_state.seed(len(brand))
-        dhcp_opts = ','.join('%s' % x for x in random_state.randint(
+        dhcp_options = ','.join('%s' % x for x in random_state.randint(
             1, 25, len(ua.os.family) + device_class, int))
 
         df = df.append({
             'device_class': DEVICE_CLASS_NAMES[device_class],
-            'mac_str': mac_str,
-            'req_list': dhcp_opts,
-            'req_list': dhcp_opts,
-            'vendor': brand.lower(),
+            'oui': oui,
+            'dhcp_options': dhcp_options,
+            'dhcp_vendor': brand.lower(),
         }, ignore_index=True)
 
     return df

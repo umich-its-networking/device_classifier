@@ -3,6 +3,7 @@ import logging
 import pickle
 
 import pandas as pd
+import numpy as np
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 
@@ -13,15 +14,11 @@ logger = logging.getLogger(__name__)
 
 
 def get_data_and_target(orig):
-    # pull OUI from MAC address
-    orig['oui'] = orig.mac_str.apply(lambda x: x[:8])
-
-    cols = ['req_list', 'vendor', 'oui']
+    cols = ['oui', 'dhcp_options', 'dhcp_vendor']
 
     return (
         pd.get_dummies(orig.loc[:, cols], prefix_sep=':'),
-        [DEVICE_CLASS_NAMES.index(x) for x in orig.device_class]
-        # orig.user_agent.map(get_device_class).values,
+        pd.Series([DEVICE_CLASS_NAMES.index(x) for x in orig.device_class])
     )
 
 
@@ -35,7 +32,7 @@ def get_fitted_classifier(X, y):
 
 def train(raw_file):
     X, y = get_data_and_target(
-        pd.read_csv(raw_file).drop_duplicates()
+        pd.read_csv(raw_file)
     )
 
     X_train, X_test, y_train, y_test = train_test_split(
