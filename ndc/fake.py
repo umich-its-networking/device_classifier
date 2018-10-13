@@ -21,13 +21,9 @@ def fake_data(n=1000):
 
     for i in range(n):
         ua_str = fake.user_agent()
-        # ua_strs[np.random.randint(0, NUM_UA_STRS - 1)]
         ua = user_agents.parse(ua_str)
 
         device_class = get_device_class(ua_str)
-
-        # if device_class == 2 and np.random.randint(0, 10) != 0:
-        #     continue
 
         try:
             brand = str(ua.device.brand).ljust(3)
