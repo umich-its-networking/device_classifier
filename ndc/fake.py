@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 import user_agents
 
-from ndc.utils import get_device_class
+from ndc.utils import get_device_class, DEVICE_CLASS_NAMES
 
 logger = logging.getLogger(__name__)
 
@@ -48,7 +48,7 @@ def fake_data(n=1000):
             1, 25, len(ua.os.family) + device_class, int))
 
         df = df.append({
-            'device_class': device_class,
+            'device_class': DEVICE_CLASS_NAMES[device_class],
             'mac_str': mac_str,
             'req_list': dhcp_opts,
             'req_list': dhcp_opts,

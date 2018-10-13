@@ -20,7 +20,7 @@ def get_data_and_target(orig):
 
     return (
         pd.get_dummies(orig.loc[:, cols], prefix_sep=':'),
-        orig.device_class
+        [DEVICE_CLASS_NAMES.index(x) for x in orig.device_class]
         # orig.user_agent.map(get_device_class).values,
     )
 
