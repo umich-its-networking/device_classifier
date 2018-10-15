@@ -29,13 +29,13 @@ def get_fitted_classifier(X, y):
     return lr
 
 
-def train(raw_file):
+def train(raw_file, test_size=0.1):
     X, y = get_data_and_target(
         pd.read_csv(raw_file)
     )
 
     X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.1, random_state=1, stratify=y)
+        X, y, test_size=test_size, random_state=1, stratify=y)
 
     lr = get_fitted_classifier(X_train, y_train)
 
