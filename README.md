@@ -22,35 +22,35 @@ Once the development server is running, you can try these URLs to see different 
 
 ## Examples
 
-**Display info about the trained classifier: <http://127.0.0.1:5000/info>**
+**Display info about the trained classifier: <http://127.0.0.1:5000/info/>**
 ```
 {
-  "accuracy": 1.0, 
+  "accuracy": 0.96, 
   "sample_size": 900
 }
 ```
 
-**Make a prediction about [DHCP options](https://www.iana.org/assignments/bootp-dhcp-parameters/bootp-dhcp-parameters.xhtml#options) fingerprint ("req_list"): <http://127.0.0.1:5000/?req_list=15,24,6,2,9,24,9,19,10>**
+**Make a prediction about [DHCP options](https://www.iana.org/assignments/bootp-dhcp-parameters/bootp-dhcp-parameters.xhtml#options) fingerprint ("req_list"): <http://127.0.0.1:5000/?dhcp_options=15,24,6,2,9,24,9,19,10>**
 ```
 {
   "predicted_class": "pc", 
   "probabilities": {
-    "mobile": 0.39055, 
-    "other": 0.03776, 
-    "pc": 0.57169
+    "mobile": 0.15885, 
+    "other": 0.00123, 
+    "pc": 0.83992
   }
 }
 ```
 
 
-**Make a prediction about a [MAC OUI](https://en.wikipedia.org/wiki/Organizationally_unique_identifier) ("oui"): <http://127.0.0.1:5000/?oui=41:70:00>**
+**Make a prediction about a [MAC OUI](https://en.wikipedia.org/wiki/Organizationally_unique_identifier) ("oui"): <http://127.0.0.1:5000/?oui=41:70:70>**
 ```
 {
   "predicted_class": "mobile", 
   "probabilities": {
-    "mobile": 0.96968, 
-    "other": 0.00839, 
-    "pc": 0.02192
+    "mobile": 0.93073, 
+    "other": 0.00354, 
+    "pc": 0.06573
   }
 }
 ```
